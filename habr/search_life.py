@@ -1,4 +1,5 @@
 from tkinter import Tk, Canvas, Button, Frame, BOTH, NORMAL, HIDDEN
+import time
 
 def refresh(): #функция обновления картинки
 	for i in range(field_height):
@@ -30,12 +31,12 @@ def step():
 	refresh()
 	repaint()
 
-def clear():
+def clear(): # очиска поля перед прорисовкой
 	for i in range(field_height):
 		for j in range(field_width):
 			canvas.itemconfig(cell_matrix[addr(i, j)], state=HIDDEN, tags=('hid','0'))
 
-def draw_a(e):
+def draw_a(e): # пользователь нажал на ячейку - закрашиваем ее
 	ii = int((e.y - 3)/cell_size)
 	jj = int((e.x - 3)/cell_size)
 	canvas.itemconfig(cell_matrix[addr(ii, jj)], state=NORMAL, tags='vis')
@@ -86,5 +87,8 @@ frame.pack(side='bottom') #пакуем фрейм
 
 canvas.bind('<B1-Motion>', draw_a) #привязывваем событие нажатия кнопки на canvas к функции draw_a
 canvas.bind('<ButtonPress>', draw_a) 
+
+time.sleep(0.01)
+step()
 
 root.mainloop() #стандартный цикл запуска графического окна
